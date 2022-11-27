@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { v4: uuid, validate } = require('uuid');
+const { v4: uuid } = require('uuid');
 
 const app = express();
 
@@ -40,7 +40,13 @@ app.put('/repositories/:id', (request, response) => {
     return response.status(404).json({ error: 'Repository not found' });
   }
 
-  const repository = { ...repositories[repositoryIndex], ...updatedRepository };
+  const likes = repositories[repositoryIndex].likes;
+
+  const repository = {
+    ...repositories[repositoryIndex],
+    ...updatedRepository,
+    likes,
+  };
 
   repositories[repositoryIndex] = repository;
 
@@ -76,7 +82,7 @@ app.post('/repositories/:id/like', (request, response) => {
 
   const likes = ++repositories[repositoryIndex].likes;
 
-  return response.json('likes');
+  return response.status(201).json({ likes });
 });
 
 module.exports = app;
