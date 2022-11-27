@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { v4: uuid } = require('uuid');
+const { v4: uuid, validate } = require('uuid');
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.put('/repositories/:id', (request, response) => {
   const { id } = request.params;
   const updatedRepository = request.body;
 
-  const repositoryIndex = repositories.findindex(
+  const repositoryIndex = repositories.findIndex(
     (repository) => repository.id === id
   );
 
